@@ -68,15 +68,18 @@ fs.createReadStream(file, "utf8")
 			parseFloat(csvrow.vlMulta);
 
 		/* Ajusta última parcela */
+		/* Utilizei esta lógica para não precisar ler novamente o arquivo, ficando com mais performance. */
 		installments++;
+		// Se a quantidade de parcelas contadas for igual ao número de prestações realiza o cálculo */
 		if (installments == parseFloat(csvrow.qtPrestacoes)) {
 			installments = 0;
+			// Recupera a diferença entre o total do campo com o cálculo das parcelas X prestação
 			const diff = parseFloat(
 				csvrow.vlTotal - csvrow.vlPresta * csvrow.qtPrestacoes
 			).toFixed(2);
 			csvrow.diff = parseFloat(diff);
 			csvrow.vlPresta =
-				diff < 0
+				diff <= 0
 					? csvrow.vlPresta - Math.abs(diff)
 					: csvrow.vlPresta + Math.abs(diff);
 		}
@@ -89,6 +92,7 @@ fs.createReadStream(file, "utf8")
 		csvrow.vlAtual = toMoney(csvrow.vlAtual);
 
 		// Escreve a linha processada diretamente no arquivo CSV
+		// Optei por esse caminho, assim ao ler o CSV de origem, vou gravando o novo
 		csvWriter
 			.writeRecords([csvrow]) // Escreve uma linha de cada vez
 			.then(() => {
