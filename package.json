@@ -1,0 +1,22 @@
+{
+	"name": "nodejs",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"cli-progress": "^3.12.0",
+		"csv-parser": "^3.0.0",
+		"csv-writer": "^1.6.0",
+		"stream": "^0.0.3"
+	},
+	"devDependencies": {
+		"@types/node": "^22.5.5"
+	}
+}
